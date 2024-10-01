@@ -11,7 +11,8 @@ document:
 
 product_prompt = """
 Find the name of the product that is discussed in this summary.
-The product name contains between 2 and 10 words. Put the Product name between the separetors <Product> ... <\Product>
+The product name contains between 2 and 10 words. Put the Product name between the separetors <Product> ... <\Product>.
+Do not mention the regulation in the product name. 
 
 Example :
 reglementation 1 : ' 
@@ -88,5 +89,21 @@ Het retributiereglement is vastgesteld door de gemeenteraad en treedt in werking
 Product Title 1 : "Het gebruik van repetitielokaal The Basement Lievegem"
 
 Predict the title for the product associated to the  : 
+
+"""
+
+prompt_multi_fields ="""
+Here is the name of a product : {product_name}
+
+Search in the below regulation :
+- Conditions associated to the product. Put the conditions between <Condition>...<\Condition>. If none, skip it.
+- Proof that needs to be provided. Put the proof between <Proof>...<\Proof>. If none, skip it.
+- Procedure to access the product. Put the procedure betwwen <Prodcedure>...<\Procedure>. If none, skip it.
+
+Answer in **Dutch**
+
+
+Here is the regulation to extract these data from {regulation}
+
 
 """
