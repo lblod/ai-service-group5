@@ -1,9 +1,12 @@
 services:
   python:
-    #image: my-python-service
-    image: semtech/mu-python-template:2.0.0-beta.2
+    image: lpdc-ai-service-group5
+    build:
+      context: ./src
+    #image: semtech/mu-python-template:2.0.0-beta.2
     environment:
       MODE: "development"
+      OLLAMA_HOST: ollama:11434
     volumes:
       - ./src/:/app
     ports: 
@@ -17,7 +20,8 @@ services:
     environment:
       - OLLAMA_HOST=0.0.0.0
     volumes:
-      - ollama_model_store:/root/.ollama
+      - ./models:/root/.ollama/models
+      #- ollama_model_store:/root/.ollama
 
 volumes:
-  ollama_model_store:
+  ollama_model_store: 
