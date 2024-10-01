@@ -12,6 +12,15 @@ services:
     ports: 
       - 8080:80
 
+  gradio_ui:
+    image: group-5-gradio-gradio_ui
+    build: 
+      context: ./gradio_ui
+    environment:
+      MODE: "development"
+    ports:
+      - 9090:8000
+
   ollama:
     image: ollama/ollama:latest
     ports: 
@@ -23,5 +32,5 @@ services:
       - ./models:/root/.ollama/models
       #- ollama_model_store:/root/.ollama
 
-volumes:
-  ollama_model_store: 
+#volumes:
+#  ollama_model_store: 
