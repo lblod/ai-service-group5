@@ -1,8 +1,11 @@
 services:
   python:
-    image: my-python-service
-    build:
-      context: ./src
+    #image: my-python-service
+    image: semtech/mu-python-template:2.0.0-beta.2
+    environment:
+      MODE: "development"
+    volumes:
+      - ./src/:/app
     ports: 
       - 8080:80
 
