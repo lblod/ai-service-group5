@@ -119,6 +119,46 @@ def get_product_type():
     return jsonify({"type": result})
 
 
+def insert_lpdc_service_instance():
+    query_string = """
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix dc: <http://purl.org/dc/terms/>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix dbpedia: <http://dbpedia.org/resource/>
+prefix dbpedia-owl: <http://dbpedia.org/ontology/>
+prefix dbpprop: <http://dbpedia.org/property/>
+prefix wdprop: <http://www.wikidata.org/prop/direct/>
+prefix ruben: <https://ruben.verborgh.org/profile/#>
+prefix rubent: <https://www.rubensworks.net/#>
+prefix schema: <http://schema.org/>
+prefix bow: <https://betweenourworlds.org/ontology/>
+prefix lc: <http://semweb.mmlab.be/ns/linkedconnections#>
+
+insert data {
+  graph <http://mu.semte.ch/graphs/organizations/5116efa8-e96e-46a2-aba6-c077e9056a96/LoketLB-LPDCGebruiker> {
+    <https://ipdc.tni-vlaanderen.be/id/instantie/9ffb00ff-8907-4b6d-b8bc-84181f3fb4d52> a <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#InstancePublicService> ;
+            <http://mu.semte.ch/vocabularies/core/uuid> '''9ffb00ff-8907-4b6d-b8bc-84181f3fb4d52''';
+            <http://purl.org/pav/createdBy> <http://data.lblod.info/id/bestuurseenheden/5116efa8-e96e-46a2-aba6-c077e9056a96>;
+            <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/review-status/concept-ai-gegenereerd>;
+            <http://purl.org/dc/terms/title> '''Test minimaal product'''@nl, '''Test minimaal product'''@nl-BE-x-generated-formal, '''Test minimaal product'''@nl-BE-x-generated-informal;
+            <http://purl.org/dc/terms/description> '''<p>Test minimaal product van een kraam op het openbaar domein (ambulante activiteit) heb je een toelating van de gemeente nodig. Een ambulante activiteit heeft betrekking op de verkoop, het te koop aanbieden of het uitstallen met het oog op de verkoop aan de consument van producten of diensten, door een handelaar buiten de vestiging vermeld in zijn inschrijving in de Kruispuntbank van Ondernemingen (KBO) of door een persoon die niet over zo’n vestiging beschikt. </p>'''@nl-BE-x-generated-informal, '''<p>Voor de uitbating van een kraam op het openbaar domein (ambulante activiteit) hebt u een toelating van de gemeente nodig. Een ambulante activiteit heeft betrekking op de verkoop, het te koop aanbieden of het uitstallen met het oog op de verkoop aan de consument van producten of diensten, door een handelaar buiten de vestiging vermeld in zijn inschrijving in de Kruispuntbank van Ondernemingen (KBO) of door een persoon die niet over zo’n vestiging beschikt. </p>'''@nl, '''<p>Voor de uitbating van een kraam op het openbaar domein (ambulante activiteit) hebt u een toelating van de gemeente nodig. Een ambulante activiteit heeft betrekking op de verkoop, het te koop aanbieden of het uitstallen met het oog op de verkoop aan de consument van producten of diensten, door een handelaar buiten de vestiging vermeld in zijn inschrijving in de Kruispuntbank van Ondernemingen (KBO) of door een persoon die niet over zo’n vestiging beschikt. </p>'''@nl-BE-x-generated-formal;
+            <http://data.europa.eu/m8g/thematicArea> <https://productencatalogus.data.vlaanderen.be/id/concept/Thema/EconomieWerk>;
+            <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#targetAudience> <https://productencatalogus.data.vlaanderen.be/id/concept/Doelgroep/Burger>, <https://productencatalogus.data.vlaanderen.be/id/concept/Doelgroep/GezinMetKinderenOfJongeren>;
+            <http://www.w3.org/ns/dcat#keyword> '''ambulante activiteit'''@nl, '''ambulante activiteiten'''@nl, '''ambulante handel'''@nl, '''openbaar domein'''@nl, '''foodtrucks'''@nl, '''foodtruck'''@nl, '''food truck'''@nl, '''standplaats'''@nl, '''marktkraam'''@nl;
+            <http://schema.org/dateCreated> '''2023-03-09T15:40:24.123296327Z'''^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            <http://schema.org/dateModified> '''2023-05-05T09:05:34.971218272Z'''^^<http://www.w3.org/2001/XMLSchema#dateTime>;
+            <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#isArchived> false.
+  }
+}
+    """
+    update_sudo(query_string)
+
+
+
 # TODO: move this out of web.py
 def run_extraction_task(source_file_uri):
     file_query = construct_get_file_query(source_file_uri, None)
@@ -131,6 +171,7 @@ def run_extraction_task(source_file_uri):
     logger.debug("Got contents of source file")
     logger.debug(contents)
 
+    insert_lpdc_service_instance()
     extraction_result = "My results"
     # TODO: write results to Triplestore
 
@@ -139,19 +180,20 @@ def run_extraction_task(source_file_uri):
     # We don't we just want to add some content to the triplestore for now.
     return None
 
-
 def run_pending_tasks():
     with delta_handling.mutex:
         while True:
             task_q = find_actionable_task_of_type(MY_TASK_TYPE, None)
             task_res = query_sudo(task_q)
             if task_res["results"]["bindings"]:
-                task_uri = task_res["results"]["bindings"][0]["job"]["value"]
+                task_uri = task_res["results"]["bindings"][0]["uri"]["value"]
                 result = run_task(task_uri, MY_EXTRACTION_GRAPH, lambda sources: [run_extraction_task(sources[0])], query_sudo, update_sudo)
                 if result:
                     logger.debug("We have an AI result to work with!")
             else:
                 break
+
+run_pending_tasks()
 
 @app.route("/delta", methods=["POST"])
 def handle_delta():
