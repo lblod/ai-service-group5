@@ -1,6 +1,23 @@
 from fastapi import FastAPI
 import gradio as gr
 import ollama
+import openai
+from openai import OpenAI
+import mlflow
+
+mlflow.set_tracking_uri("http://mlflow:9292")
+mlflow.openai.autolog(log_models=True, log_model_signatures=True)
+mlflow.set_experiment('abb-hackathon')
+mlflow.start_run()
+
+OAIClient = OpenAI( api_key="ollama", base_url="http://ollama:11434/v1")
+mlflow.openai.save_model(OAIClient)
+
+#client = mlflow.openai.load
+
+
+
+
 
 
 client = ollama.Client(host="http://ollama:11434")
@@ -28,16 +45,23 @@ def complete(system_prompt, prompt, text):
     Document: {text}
     '''
 
-
-
-    #print(comb_prompt)
-    response = client.chat(model="llama3.1", messages=[
+    response = OAIClient.chat.completions.create(model="llama3.1", messages=[
             { 'role': 'system',
               'content': system_prompt,},
             { 'role': 'user',
              'content': comb_prompt}
         ])
-    return response['message']['content']
+    return response.choices[0].message.content
+
+
+    #print(comb_prompt)
+    #response = client.chat(model="llama3.1", messages=[
+            #{ 'role': 'system',
+              #'content': system_prompt,},
+            #{ 'role': 'user',
+             #'content': comb_prompt}
+        #])
+    #return response['message']['content']
 
 
 
