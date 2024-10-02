@@ -1,27 +1,46 @@
 from ollama import Client
+from openai import OpenAI
+import mlflow
 from prompts import (
     summary_prompt, product_prompt, prompt_description, prompt_title,
     prompt_conditions, prompt_procedure, prompt_justification,
     prompt_doelgroep, prompt_type, prompt_thema, prompt_multi_fields
 )
 
-
 client = Client(host='http://ollama:11434')
 
-def process_ai_request(prompt):
-    response = client.chat(model='llama-3-8b-instruct-abb', messages=[
-        {
-            'role': 'user',
-            'content': prompt,
-        },
-    ])
-    return response['message']['content']
+
+mlflos.set_tracking_uri("http://mlflow:9292")
+mlflow.set_experiment("abb-hackathon")
+mlflow.openai.autolog()
+mlflow.set_run()
+
+OAIclient = OpenAI(
+        api_key = "ollama",
+        base_url = "http://ollama:11434/v1",
+        )
+# def process_ai_request(prompt):
+#     response = client.chat(model='llama-3-8b-instruct-abb', messages=[
+#         {
+#             'role': 'user',
+#             'content': prompt,
+#         },
+#     ])
+#     return response['message']['content']
 
 def llm_response(prompt):
 
+
     client.pull('llama3.1')
-    response = client.generate(model='llama3.1', prompt=prompt)
-    return response
+
+    #response = client.generate(model='llama3.1', prompt=prompt)
+    response = OAIclient.chat.completions.create(
+            model='llama3.1',
+            messages = [
+                { 'role': 'user',
+                  'content': 'prompt',}
+                ])
+    return response.choices[0].message.content
 
 # Function for API route
 def get_product_ai(text):
@@ -32,7 +51,6 @@ def get_target_group_ai(text):
     full_prompt = f"{prompt_doelgroep}\n\n{text}"
     return llm_response(full_prompt)
 
-# Add similar functions for other routes
 def get_themas_ai(text):
     full_prompt = f"{prompt_thema}\n\n{text}"
     return llm_response(full_prompt)

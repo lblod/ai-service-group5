@@ -11,7 +11,7 @@ mlflow.set_experiment('abb-hackathon')
 mlflow.start_run()
 
 OAIClient = OpenAI( api_key="ollama", base_url="http://ollama:11434/v1")
-mlflow.openai.save_model(OAIClient)
+#mlflow.openai.log_model(OAIClient, task='chat.completions', artifact_path='/mlruns')
 
 #client = mlflow.openai.load
 

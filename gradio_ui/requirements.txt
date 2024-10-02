@@ -3,6 +3,6 @@ gradio
 ollama
 uvicorn
 mlflow
-openai
+openai~=1.17.0
 tiktoken
 tenacity
