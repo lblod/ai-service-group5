@@ -83,8 +83,10 @@ WHERE {
 }
 """)
     return query_template.substitute(
-        graph=sparql_escape_uri(graph),
+        graph=sparql_escape_uri(graph) if graph else "?g",
         file_uri=sparql_escape_uri(file_uri))
+
+
 
 # Ported from https://github.com/mu-semtech/file-service/blob/dd42c51a7344e4f7a3f7fba2e6d40de5d7dd1972/web.rb#L228
 def shared_uri_to_path(uri):
