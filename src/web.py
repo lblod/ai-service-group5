@@ -9,7 +9,6 @@ from ai_processor import (
 
 from flask import request, jsonify
 from ollama import Client
-from flask import jsonify, request
 from rdflib import Graph
 import threading
 import os
