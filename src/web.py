@@ -193,8 +193,6 @@ def run_pending_tasks():
             else:
                 break
 
-run_pending_tasks()
-
 @app.route("/delta", methods=["POST"])
 def handle_delta():
     # Only trigger in case of extraction job insertion
@@ -205,7 +203,7 @@ def handle_delta():
     new_extraction_jobs = [
         insert["subject"]["value"]
         for insert in inserts
-        if insert["predicate"]["value"] == "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+        if insert["predicate"]["value"] == "http://redpencil.data.gift/vocabularies/tasks/operation"
         and insert["object"]["value"] == MY_TASK_TYPE
     ]
     if not new_extraction_jobs:
