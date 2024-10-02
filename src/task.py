@@ -36,7 +36,7 @@ INSERT {
         $task task:resultsContainer $container .
         $container a nfo:DataContainer ;
             mu:uuid $container_uuid ;
-            ext:content $results .
+            task:hasFile $results .
     }
 }
 WHERE {
@@ -76,7 +76,6 @@ INSERT {
 }
 WHERE {
   GRAPH ?g {
-      VALUES ?task {$tasks}
       $task a task:Task ;
             adms:status ?old_status .
       OPTIONAL { ?task dct:modified ?old_modified }
@@ -108,7 +107,7 @@ SELECT (?uuid as ?id) ?status ?created ?used ?operation WHERE {
             adms:status <http://redpencil.data.gift/id/concept/JobStatus/scheduled> ;
             task:operation ?operation ;
             mu:uuid ?uuid .
-        OPTIONAL { $task_uri task:inputContainer/ext:content ?used }
+        OPTIONAL { $task_uri task:inputContainer/task:hasFile ?used }
     }
 }
 ORDER BY ASC(?created)
@@ -121,7 +120,7 @@ LIMIT 1
     return query_string
 
 
-def find_actionable_task_of_type(types, graph):
+def find_actionable_task_of_type(task_type, graph):
     query_template = Template("""
 PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
 PREFIX dct: <http://purl.org/dc/terms/>
@@ -137,8 +136,8 @@ SELECT (?task as ?uri) (?uuid as ?id) ?created ?used ?operation WHERE {
             adms:status <http://redpencil.data.gift/id/concept/JobStatus/scheduled> ;
             task:operation ?operation ;
             mu:uuid ?uuid .
-        OPTIONAL { ?task task:inputContainer/ext:content ?used }
-        VALUES ?operation {$task_types}
+        OPTIONAL { ?task task:inputContainer/task:hasFile ?used }
+        VALUES ?operation {$task_type}
     }
 }
 ORDER BY ASC(?created)
@@ -146,9 +145,10 @@ LIMIT 1
 """)
     query_string = query_template.substitute(
         graph=sparql_escape_uri(graph) if graph else "?g",
-        task_types=" ".join([sparql_escape_uri(uri) for uri in types]),
+        task_type=sparql_escape_uri(task_type),
     )
     return query_string
+
 
 
 def get_input_contents_task(task_uri, graph):
@@ -159,7 +159,7 @@ PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
 SELECT ?content WHERE {
     GRAPH ?g {
         $task_uri a task:Task ;
-                  task:inputContainer/ext:content ?content.
+                  task:inputContainer/task:hasFile ?content.
     }
 }
 """)
