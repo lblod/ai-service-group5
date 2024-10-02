@@ -92,6 +92,48 @@ Predict the title for the product associated to the  :
 
 """
 
+prompt_conditions = """ 
+Given the text from the Flemish government about a service/product available to citizens, companies, or entities, extract the specific conditions, requirements, 
+or criteria that one must meet in order to qualify for this service/product. 
+Ensure the answer includes all relevant eligibility criteria, including any age, income, geographic, 
+or business-related restrictions or prerequisites mentioned in the document.
+"""
+
+prompt_procedure = """  
+Given the text from the Flemish government about a service/product available to citizens, companies, or entities, extract the specific procedures or steps
+that one must take in order to call upon this service/product. 
+Ensure the answer includes all relevant steps that need to be taken mentioned in the document.
+"""
+
+
+prompt_justification = """ 
+Given the text from the Flemish government about a service/product available to citizens, companies, or entities, extract the specific justifications, evidence, proof or 
+any other document that one must provide when calling upon  this service/product. 
+Ensure the answer includes all relevant documents, notes mentioned in the document.
+
+
+"""
+
+prompt_doelgroep = f"""You are an assistant that will help label a text. The text you will be given comes from Flemish government notes. 
+                    For the content you are given, you need to classify according to this criteria: Doelgroep. For the criteria, 
+                    there is a list of labels you need to refer to  in order to classify the text. For Doelgroep, refer to {doelgroep}. 
+                    For the Doelgroep criteria, there can be multiple labels that can applied to the given text. 
+                    **Return all of the relevant labels associated to the text.""" 
+
+prompt_type = f"""You are an assistant that will help label a text. The text you will be given comes from Flemish government notes. 
+                    For the content you are given, you need to classify according to this criteria: Type. For the criteria, 
+                    there is a list of labels you need to refer to  in order to classify the text. For Type, refer to {type}. 
+                    For the Type criteria, there can be multiple labels that can applied to the given text. 
+                    **Return the relevant label associated to the text. There is only one label that can be associated**. """
+
+prompt_thema = f"""You are an assistant that will help label a text. The text you will be given comes from Flemish government notes. 
+
+                    For the content you are given, you need to classify according to this criteria: Thema. For the criteria, 
+                    there is a list of labels you need to refer to  in order to classify the text. For Type, refer to {thema}. 
+                    For the Thema criteria, there can be multiple labels that can applied to the given text. 
+                    **Return the relevant label associated to the text. There is only one label that can be associated**. """
+
+
 prompt_multi_fields ="""
 Here is the name of a product : {product_name}
 
