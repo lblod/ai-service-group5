@@ -1,11 +1,11 @@
 import ollama
-# from ai_processor import (
-#     get_product_ai, get_target_group_ai, get_themas_ai,
-#     get_product_description_ai, get_product_conditions_ai,
-#     get_product_procedures_ai, get_product_proofs_ai,
-#     get_all_product_information_ai, get_product_cost_ai,
-#     get_product_type_ai
-# )
+from ai_processor import (
+    get_product_ai, get_target_group_ai, get_themas_ai,
+    get_product_description_ai, get_product_conditions_ai,
+    get_product_procedures_ai, get_product_proofs_ai,
+    get_all_product_information_ai, get_product_cost_ai,
+    get_product_type_ai
+)
 
 from flask import request, jsonify
 from ollama import Client
