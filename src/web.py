@@ -151,7 +151,7 @@ insert data {
             <http://www.w3.org/ns/dcat#keyword> '''ambulante activiteit'''@nl, '''ambulante activiteiten'''@nl, '''ambulante handel'''@nl, '''openbaar domein'''@nl, '''foodtrucks'''@nl, '''foodtruck'''@nl, '''food truck'''@nl, '''standplaats'''@nl, '''marktkraam'''@nl;
             <http://schema.org/dateCreated> '''2023-03-09T15:40:24.123296327Z'''^^<http://www.w3.org/2001/XMLSchema#dateTime>;
             <http://schema.org/dateModified> '''2023-05-05T09:05:34.971218272Z'''^^<http://www.w3.org/2001/XMLSchema#dateTime>;
-            <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#isArchived> false.
+            <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#isArchived> "false".
   }
 }
     """
