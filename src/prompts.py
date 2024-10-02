@@ -1,3 +1,16 @@
+import pandas as pd 
+
+# df = pd.read_csv("~/AI-service/ai-service-group5/src/producten_en_diensten_2024-09-13_21-47-37.csv", encoding="cp1252", encoding_errors="ignore")
+thema = ['Burger en Overheid', 'Economie en Werk', 'Burger en Overheid, Mobiliteit en Openbare Werken', 'Mobiliteit en Openbare Werken', 'Welzijn en Gezondheid', 'Milieu en Energie', 'Bouwen en Wonen, Welzijn en Gezondheid', 'Bouwen en Wonen, Burger en Overheid', 'Mobiliteit en Openbare Werken, Welzijn en Gezondheid', 'Bouwen en Wonen', 'Cultuur, Sport en Vrije Tijd, Welzijn en Gezondheid', 'Cultuur, Sport en Vrije Tijd', 'Bouwen en Wonen, Mobiliteit en Openbare Werken', nan, 'Onderwijs en Wetenschap', 'Economie en Werk, Milieu en Energie', 'Bouwen en Wonen, Milieu en Energie', 'Bouwen en Wonen, Economie en Werk, Milieu en Energie', 'Bouwen en Wonen, Economie en Werk, Welzijn en Gezondheid', 'Burger en Overheid, Welzijn en Gezondheid', 'Bouwen en Wonen, Economie en Werk', 'Economie en Werk, Mobiliteit en Openbare Werken', 'Economie en Werk, Welzijn en Gezondheid', 'Burger en Overheid, Economie en Werk', 'Bouwen en Wonen, Economie en Werk, Mobiliteit en Openbare Werken', 'Burger en Overheid, Milieu en Energie', 'Burger en Overheid, Cultuur, Sport en Vrije Tijd', 'Cultuur, Sport en Vrije Tijd, Onderwijs en Wetenschap', 'Bouwen en Wonen, Milieu en Energie, Mobiliteit en Openbare Werken', 'Milieu en Energie, Welzijn en Gezondheid', 'Bouwen en Wonen, Burger en Overheid, Milieu en Energie', 'Onderwijs en Wetenschap, Welzijn en Gezondheid', 'Milieu en Energie, Mobiliteit en Openbare Werken', 'Cultuur, Sport en Vrije Tijd, Mobiliteit en Openbare Werken', 'Burger en Overheid, Economie en Werk, Mobiliteit en Openbare Werken', 'Cultuur, Sport en Vrije Tijd, Milieu en Energie', 'Burger en Overheid, Milieu en Energie, Welzijn en Gezondheid', 'Bouwen en Wonen, Burger en Overheid, Welzijn en Gezondheid', 'Cultuur, Sport en Vrije Tijd, Economie en Werk', 'Burger en Overheid, Cultuur, Sport en Vrije Tijd, Economie en Werk', 'Burger en Overheid, Onderwijs en Wetenschap', 'Bouwen en Wonen, Cultuur, Sport en Vrije Tijd', 'Cultuur, Sport en Vrije Tijd, Onderwijs en Wetenschap, Welzijn en Gezondheid', 'Cultuur, Sport en Vrije Tijd, Economie en Werk, Milieu en Energie, Mobiliteit en Openbare Werken, Onderwijs en Wetenschap, Welzijn en Gezondheid', 'Burger en Overheid, Cultuur, Sport en Vrije Tijd, Welzijn en Gezondheid', 'Cultuur, Sport en Vrije Tijd, Milieu en Energie, Welzijn en Gezondheid', 'Bouwen en Wonen, Burger en Overheid, Cultuur, Sport en Vrije Tijd, Economie en Werk, Milieu en Energie, Mobiliteit en Openbare Werken, Onderwijs en Wetenschap, Welzijn en Gezondheid', 'Cultuur, Sport en Vrije Tijd, Economie en Werk, Welzijn en Gezondheid', 'Economie en Werk, Onderwijs en Wetenschap, Welzijn en Gezondheid', 'Bouwen en Wonen, Milieu en Energie, Welzijn en Gezondheid', 'Cultuur, Sport en Vrije Tijd, Economie en Werk, Milieu en Energie', 'Bouwen en Wonen, Cultuur, Sport en Vrije Tijd, Mobiliteit en Openbare Werken', 'Cultuur, Sport en Vrije Tijd, Economie en Werk, Onderwijs en Wetenschap, Welzijn en Gezondheid', 'Cultuur, Sport en Vrije Tijd, Economie en Werk, Onderwijs en Wetenschap', 'Cultuur, Sport en Vrije Tijd, Mobiliteit en Openbare Werken, Onderwijs en Wetenschap, Welzijn en Gezondheid', 'Bouwen en Wonen, Burger en Overheid, Economie en Werk', 'Economie en Werk, Mobiliteit en Openbare Werken, Welzijn en Gezondheid', 'Bouwen en Wonen, Burger en Overheid, Mobiliteit en Openbare Werken', 'Bouwen en Wonen, Economie en Werk, Onderwijs en Wetenschap', 'Economie en Werk, Milieu en Energie, Onderwijs en Wetenschap', 'Economie en Werk, Milieu en Energie, Welzijn en Gezondheid', 'Cultuur, Sport en Vrije Tijd, Economie en Werk, Mobiliteit en Openbare Werken', 'Milieu en Energie, Mobiliteit en Openbare Werken, Welzijn en Gezondheid', 'Economie en Werk, Milieu en Energie, Mobiliteit en Openbare Werken', 'Burger en Overheid, Mobiliteit en Openbare Werken, Welzijn en Gezondheid', 'Bouwen en Wonen, Cultuur, Sport en Vrije Tijd, Welzijn en Gezondheid', 'Economie en Werk, Onderwijs en Wetenschap', 'Burger en Overheid, Economie en Werk, Welzijn en Gezondheid', 'Cultuur, Sport en Vrije Tijd, Milieu en Energie, Onderwijs en Wetenschap', 'Bouwen en Wonen, Cultuur, Sport en Vrije Tijd, Milieu en Energie']
+type = ['Bewijs', 'Toelating', 'Financieel voordeel', 'Financi‘le verplichting', 'Advies en begeleiding', 'Infrastructuur en materiaal', 'Voorwerp']
+doelgroep = ['Burger', 'Onderneming', 'Andere organisatie, Onderneming', 'Andere organisatie, Burger, Onderneming, Vereniging', 'Burger, Onderneming', 'Andere organisatie, Burger, Onderneming', 'Burger, Lokaal bestuur', nan, 'Andere organisatie, Lokaal bestuur', 'Andere organisatie, Vereniging', 'Vereniging', 'Andere organisatie', 'Andere organisatie, Burger, Lokaal bestuur, Onderneming, Vereniging', 'Andere organisatie, Burger', 'Onderneming, Vereniging', 'Andere organisatie, Onderneming, Vereniging', 'Andere organisatie, Burger, Vereniging', 'Lokaal bestuur', 'Burger, Vereniging', 'Burger, Onderneming, Vereniging', 'Andere organisatie, Lokaal bestuur, Onderneming, Vereniging', 'Andere organisatie, Burger, Lokaal bestuur, Onderneming', 'Andere organisatie, Burger, Lokaal bestuur, Vereniging', 'Lokaal bestuur, Onderneming', 'Lokaal bestuur, Vereniging', 'Andere organisatie, Burger, Lokaal bestuur', 'Andere organisatie, Lokaal bestuur, Vereniging', 'Andere organisatie, Lokaal bestuur, Onderneming, Vlaamse overheid', 'Andere organisatie, Lokaal bestuur, Onderneming', 'Lokaal bestuur, Vlaamse overheid', 'Andere organisatie, Lokaal bestuur, Vereniging, Vlaamse overheid', 'Andere organisatie, Burger, Vereniging, Vlaamse overheid', 'Andere organisatie, Burger, Lokaal bestuur, Onderneming, Vereniging, Vlaamse overheid', 'Andere organisatie, Burger, Lokaal bestuur, Onderneming, Vlaamse overheid']
+
+
+
+thema_list = thema
+type_list = type
+doelgroep_list = doelgroep
+
 summary_prompt=  """
 You are a document summarizer. Based on the regulation document you received, you create a clear summary of the regulation. 
 The summary must contain between 200 and 500 words.
@@ -116,20 +129,20 @@ Ensure the answer includes all relevant documents, notes mentioned in the docume
 
 prompt_doelgroep = f"""You are an assistant that will help label a text. The text you will be given comes from Flemish government notes. 
                     For the content you are given, you need to classify according to this criteria: Doelgroep. For the criteria, 
-                    there is a list of labels you need to refer to  in order to classify the text. For Doelgroep, refer to {doelgroep}. 
+                    there is a list of labels you need to refer to  in order to classify the text. For Doelgroep, refer to {doelgroep_list}. 
                     For the Doelgroep criteria, there can be multiple labels that can applied to the given text. 
                     **Return all of the relevant labels associated to the text.""" 
 
 prompt_type = f"""You are an assistant that will help label a text. The text you will be given comes from Flemish government notes. 
                     For the content you are given, you need to classify according to this criteria: Type. For the criteria, 
-                    there is a list of labels you need to refer to  in order to classify the text. For Type, refer to {type}. 
+                    there is a list of labels you need to refer to  in order to classify the text. For Type, refer to {type_list}. 
                     For the Type criteria, there can be multiple labels that can applied to the given text. 
                     **Return the relevant label associated to the text. There is only one label that can be associated**. """
 
 prompt_thema = f"""You are an assistant that will help label a text. The text you will be given comes from Flemish government notes. 
 
                     For the content you are given, you need to classify according to this criteria: Thema. For the criteria, 
-                    there is a list of labels you need to refer to  in order to classify the text. For Type, refer to {thema}. 
+                    there is a list of labels you need to refer to  in order to classify the text. For Type, refer to {thema_list}. 
                     For the Thema criteria, there can be multiple labels that can applied to the given text. 
                     **Return the relevant label associated to the text. There is only one label that can be associated**. """
 
@@ -147,5 +160,13 @@ Answer in **Dutch**
 
 Here is the regulation to extract these data from {regulation}
 
+"""
+
+prompt_force_json = """
+Please provide the following information formatted strictly as JSON. Ensure the JSON is valid and adheres to the format shown below:
+
+{json_format}
+
+Please fill in the values with appropriate data based on the query:{LLM_output}"
 
 """

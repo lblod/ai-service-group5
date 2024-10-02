@@ -1,0 +1,1 @@
+FROM llama-3-8b-instruct-abb-unsloth.Q4_K_M.gguf
